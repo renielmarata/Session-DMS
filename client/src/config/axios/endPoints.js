@@ -4,6 +4,7 @@ const endPoints = {
     },
 
     auth: {
+        checkAuth: 'checkAuth',
         signin: 'signin',
     }
 }
