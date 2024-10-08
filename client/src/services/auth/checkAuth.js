@@ -1,13 +1,12 @@
-import axios from "axios";
 import { checkAuthAPI } from "../../api";
-import { axiosInstance, endPoints } from "../../config";
 import { getAccessTokenCookie } from "../../utils";
 
 
-const checkAuth = async () => {
+const checkAuth = async (isAuthenticated, setIsAuthenticated) => {
     try {
+
         const headers = {
-        'Content-Type':'application/json',
+            'Content-Type': 'application/json',
         };
 
         const accessToken = await getAccessTokenCookie();
@@ -16,15 +15,15 @@ const checkAuth = async () => {
             headers['authorization'] = `Bearer ${accessToken}`;
         }
 
-        const response = await axiosInstance.post(
-            endPoints.auth.checkAuth,
-            {},
-            {
-                headers,
-            }
-        )
+        const response = await checkAuthAPI(headers);
 
-        return response;
+        if (response.status === 200 && response.data.message === "authorized") {
+            return setIsAuthenticated(true);
+        } else {
+            console.log(response.status+" "+response.data.message);
+            return setIsAuthenticated(false);
+        }
+
 
     } catch (err) {
         console.error(err);

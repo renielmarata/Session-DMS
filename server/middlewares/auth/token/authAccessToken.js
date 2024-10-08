@@ -5,8 +5,11 @@ const authAccessToken = async (req, res, next) => {
         const accessToken = await verifyAccessToken(req);
 
         if (!accessToken) {
-            next();
+            return next();
         }
+
+        req.accessToken = accessToken;
+        return next();
 
 
     } catch (err) {

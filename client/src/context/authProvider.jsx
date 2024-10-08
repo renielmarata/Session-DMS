@@ -8,20 +8,23 @@ export const UseAuthContext = () => {
 }
 
 const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(null);
 
     useEffect(()=>{
         const initialLoad = async () => {
             try {
-                await checkAuth();
+                await checkAuth(isAuthenticated, setIsAuthenticated);
+
+                
+
             } catch (err) {
                 console.error(err);
-                return false;
+                setIsAuthenticated(false);
             }
         }
 
         initialLoad();
-    },[])
+    },[isAuthenticated])
 
 
     return (

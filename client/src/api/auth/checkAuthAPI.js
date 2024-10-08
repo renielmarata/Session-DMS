@@ -7,6 +7,7 @@ const checkAuthAPI = async (headers) => {
             {},
             {
                 headers,
+                withCredentials: true,
             }
         )
 

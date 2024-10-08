@@ -7,7 +7,7 @@ const getAccessTokenCookie = async (req) => {
 
     
         if (!unverifiedToken) {
-            return false;
+            return null;
         }
 
 

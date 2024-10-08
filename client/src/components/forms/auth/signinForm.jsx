@@ -9,6 +9,8 @@ import { styled } from "@mui/system";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
+import { SigninFailedNotification } from "../..";
+import { UseAuthContext } from "../../../context/authProvider";
 
 
 // styled components
@@ -31,6 +33,7 @@ const FormHeader = styled(Typography)(({ theme }) => ({
 
 const SigninForm = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const { isAuthenticated } = UseAuthContext();
 
     const signinSchema = Yup.object({
         username: Yup.string()
@@ -56,10 +59,17 @@ const SigninForm = () => {
             >
                 {({ isSubmitting, values, errors, handleSubmit, handleChange, touched }) => (
                     <Form>
+
+
                         <Stack direction='column' spacing={3}>
                             <FormHeader>
                                 Signin
                             </FormHeader>
+
+                            {
+                                /** notification */
+                                !isAuthenticated && <SigninFailedNotification/>
+                            }
 
                             <Field
                                 as={TextField}

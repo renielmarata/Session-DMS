@@ -9,6 +9,8 @@ const getAccessTokenCookie = async () => {
             return false;
         }
 
+        
+
         return accessToken;
 
     } catch (err) {
