@@ -1,6 +1,20 @@
-const createAccessToken = (data) => {
+const { jwt } = require("../../libs");
+
+const createAccessToken = async (token) => {
     try {
-        console.log("create accessToken utils");
+        const { idnumber, username } = token;
+
+        const newAccessToken = await jwt.sign(
+            {
+                idnumber, username
+            },
+            process.env.SECRET_KEY,
+            {
+                expiresIn: '30m',
+            }
+        );
+
+        return newAccessToken;
     } catch (err) {
         console.log(err);
         return false;

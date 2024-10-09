@@ -7,40 +7,34 @@ const checkAuthController = async (req, res) => {
         const accessToken = req.accessToken;
         const refreshToken = req.refreshToken;
 
+
         if (accessToken) {
+            console.log("AccessToken found -> " + JSON.stringify(accessToken));
             return res.status(200).json({
                 message: 'authenticated',
             });
         }
 
-        if (!refreshToken) {
-            console.log("accessToken been created");
+        if (refreshToken) {
+            console.log("RefreshToken found -> " + JSON.stringify(refreshToken));
 
-            // Create a new access token
-            const newAccessToken = await jwt.sign(
-                {
-                    username: 'reniel',
-                    password: 'password123',
-                },
-                process.env.SECRET_KEY,
-                {
-                    expiresIn: '1h',
-                }
-            );
 
-            // Set the cookie with the new access token
-            res.cookie('testing', newAccessToken, {
-                maxAge: 1 * 24 * 60 * 60 * 1000,
-                path: '/' // Ensures the cookie is accessible across the site
-            });
+            // create accessToken
+            const newAccessToken = await createAccessToken(refreshToken);
 
-            // Send a response back to the client
-            return res.status(200).json({
-                message: 'authorized',
-            });
+            // send accessToken in cookie
+            if (newAccessToken) {
+                res.cookie("TolGovAccess", newAccessToken, { maxAge: 30 * 60 * 1000 });
+
+                 return res.status(200).json({
+                    message: "authenticated",
+                });
+            }
+
+            return res.status(401).json({
+                message: 'unauthenticated'
+            })
         }
-
-
 
         return res.status(401).json({
             message: 'unauthorized',

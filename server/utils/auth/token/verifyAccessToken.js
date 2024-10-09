@@ -4,7 +4,6 @@ const { jwt, dotenv } = require("../../libs");
 const getAccessTokenCookie = async (req) => {
     try {
         const unverifiedToken = req.headers?.authorization?.split(" ")[1];
-
     
         if (!unverifiedToken) {
             return null;
@@ -12,7 +11,7 @@ const getAccessTokenCookie = async (req) => {
 
 
         try {
-            const accessToken = await jwt.verify("testing", process.env.SECRET_KEY);
+            const accessToken = await jwt.verify(unverifiedToken, process.env.SECRET_KEY);
 
             return accessToken;
         } catch (err) {

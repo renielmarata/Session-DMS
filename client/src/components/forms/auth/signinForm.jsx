@@ -33,7 +33,7 @@ const FormHeader = styled(Typography)(({ theme }) => ({
 
 const SigninForm = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const { isAuthenticated } = UseAuthContext();
+    const { isAuthenticated, showNotif } = UseAuthContext(null);
 
     const signinSchema = Yup.object({
         username: Yup.string()
@@ -68,7 +68,7 @@ const SigninForm = () => {
 
                             {
                                 /** notification */
-                                !isAuthenticated && <SigninFailedNotification/>
+                                showNotif && <SigninFailedNotification/>
                             }
 
                             <Field
