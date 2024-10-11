@@ -3,21 +3,22 @@ const { jwt } = require("../../utils/libs");
 
 const checkAuthController = async (req, res) => {
     try {
-        console.log("received in controller");
+        
         const accessToken = req.accessToken;
         const refreshToken = req.refreshToken;
 
+        console.log('accessToken -> ' + JSON.stringify(accessToken));
+        console.log('refreshToken -> ' + JSON.stringify(refreshToken));
+        console.log("received in controller");
+
 
         if (accessToken) {
-            console.log("AccessToken found -> " + JSON.stringify(accessToken));
             return res.status(200).json({
                 message: 'authenticated',
             });
         }
 
         if (refreshToken) {
-            console.log("RefreshToken found -> " + JSON.stringify(refreshToken));
-
 
             // create accessToken
             const newAccessToken = await createAccessToken(refreshToken);

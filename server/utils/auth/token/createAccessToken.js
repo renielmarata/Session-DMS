@@ -10,13 +10,13 @@ const createAccessToken = async (token) => {
             },
             process.env.SECRET_KEY,
             {
-                expiresIn: '30m',
+                expiresIn: '3d',
             }
         );
 
         return newAccessToken;
     } catch (err) {
-        console.log(err);
+        console.log(err.name);
         return false;
     }
 }

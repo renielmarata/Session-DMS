@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { checkAuth } from "../services";
+import signinAuth from "../services/auth/signinAuth";
 
 const AuthContext = createContext();
 
@@ -10,12 +11,21 @@ export const UseAuthContext = () => {
 const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [showNotif, setShowNotif] = useState(false);
+    
 
-    useEffect(()=>{
+    // initial authentication
+    useEffect(() => {
         const initialLoad = async () => {
             try {
 
-                await checkAuth(setIsAuthenticated, setShowNotif);
+                const res = await checkAuth(setIsAuthenticated, setShowNotif);
+                console.log("response in -> " + res);
+
+                if (res) {
+                    await setIsAuthenticated(true);
+                }
+
+                console.log(isAuthenticated);
 
 
             } catch (err) {
@@ -26,11 +36,12 @@ const AuthProvider = ({ children }) => {
         }
 
         initialLoad();
-    },[])
+    }, [isAuthenticated]);
+
 
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, showNotif}}>
+        <AuthContext.Provider value={{isAuthenticated, showNotif, setShowNotif, signinAuth }}>
             { children }
         </AuthContext.Provider>
     )

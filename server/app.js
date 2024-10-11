@@ -1,7 +1,7 @@
 const { express, dotenv, cookieParser, helmet, cors } = require("./utils/libs.js");
 const { dbConnect } = require("./config/index.js");
 const { authAccessToken } = require("./middlewares/index.js");
-const { checkAuthRouter } = require("./routers/index.js");
+const { checkAuthRouter, signinAuthRouter } = require("./routers/index.js");
 
 
 
@@ -27,6 +27,7 @@ const startServer = async () => {
 
 
         app.use(checkAuthRouter);
+        app.use(signinAuthRouter);
 
 
         

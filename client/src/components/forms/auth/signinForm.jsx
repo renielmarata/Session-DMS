@@ -11,6 +11,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import { SigninFailedNotification } from "../..";
 import { UseAuthContext } from "../../../context/authProvider";
+import signinAuth from "../../../services/auth/signinAuth";
 
 
 // styled components
@@ -33,19 +34,19 @@ const FormHeader = styled(Typography)(({ theme }) => ({
 
 const SigninForm = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const { isAuthenticated, showNotif } = UseAuthContext(null);
+    const { isAuthenticated, showNotif, setShowNotif } = UseAuthContext(null);
 
     const signinSchema = Yup.object({
         username: Yup.string()
             .typeError('invalid characters')
-            .matches(/^[A-Za-z]+&/, "letters only")
+            .matches(/^[A-Za-z]+$/, "letters only")
             .max(20, 'maximum of 20 characters')
             .required('username is required'),
         password: Yup.string()
             .typeError("invalid characters")
             .min(5, 'minimum of 5 characters')
             .max(20, 'maximum of 20 characters')
-            .required('password is required')
+            .required('password is required'),
     })
 
     return ( 
@@ -53,8 +54,9 @@ const SigninForm = () => {
             <Formik
                 initialValues={{ username: "", password: "" }}
                 validationSchema={signinSchema}
-                onSubmit={() => {
-                    console.log("submit test");
+                onSubmit={async (values, { isSubmitting }) => {
+                    //send request
+                    await signinAuth(values, setShowNotif);
                 }}
             >
                 {({ isSubmitting, values, errors, handleSubmit, handleChange, touched }) => (

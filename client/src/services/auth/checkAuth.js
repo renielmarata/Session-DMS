@@ -11,7 +11,6 @@ const checkAuth = async (setIsAuthenticated) => {
 
 
         const accessToken = await getAccessTokenCookie();
-        console.log(accessToken);
 
         if (accessToken) {
             headers['authorization'] = `Bearer ${accessToken}`;
@@ -23,7 +22,6 @@ const checkAuth = async (setIsAuthenticated) => {
             setIsAuthenticated(true);
             return true;
         } else {
-            console.log("failed");
             setIsAuthenticated(false);
             return false;
         }
