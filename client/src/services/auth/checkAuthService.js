@@ -2,7 +2,7 @@ import { checkAuthAPI } from "../../api";
 import { getAccessTokenCookie } from "../../utils";
 
 
-const checkAuth = async (setIsAuthenticated) => {
+const checkAuthService = async (setIsAuthenticated) => {
     try {
 
         const headers = {
@@ -34,4 +34,4 @@ const checkAuth = async (setIsAuthenticated) => {
     }
 }
 
-export default checkAuth;
+export default checkAuthService;

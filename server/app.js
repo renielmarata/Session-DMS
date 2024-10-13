@@ -29,6 +29,21 @@ const startServer = async () => {
         app.use(checkAuthRouter);
         app.use(signinAuthRouter);
 
+        app.post("/logout", (req, res) => {
+            console.log("logout request received");
+            res.clearCookie(
+                'TolGovAccess',
+            );
+
+            res.clearCookie(
+                'TolGovRefresh',
+            );
+
+            return res.status(204).json({
+                message: 'successfully remote token'
+            })
+        })
+
 
         
 

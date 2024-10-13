@@ -6,6 +6,11 @@ const endPoints = {
     auth: {
         checkAuth: 'checkAuth',
         signin: 'signin',
+        logout: 'logout',
+    },
+
+    admin: {
+        addSession: 'addSession',
     }
 }
 

@@ -4,37 +4,9 @@ const { createAccessToken, createRefreshToken } = require("../../utils");
 const signinAuthController = async (req, res) => {
     try {
 
-        const accessToken = req.accessToken;
-        const refreshToken = req.refreshToken;
-
-        console.log("accessToken -> " + JSON.stringify(accessToken));
-        console.log("refreshToken -> " + JSON.stringify(refreshToken));
 
         console.log('signin authentication controller');
 
-
-        if (accessToken) {
-            return res.status(200).json({
-                message: 'authenticated',
-            })
-        }
-
-
-        if (refreshToken) {
-            const newAccessToken = await createAccessToken(refreshToken);
-
-            res.cookie(
-                "TolGovAccess",
-                newAccessToken,
-                {
-                    maxAge: 30 * 60 * 1000,
-                }
-            );
-
-            return res.status(200).json({
-                message: 'authenticated',
-            });
-        }
 
 
         // check user using username and password
@@ -62,7 +34,10 @@ const signinAuthController = async (req, res) => {
             res.cookie('TolGovAccess', newAccessToken, { maxAge: 30 * 60 * 1000 });
             res.cookie('TolGovRefresh', newRefreshToken, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
 
-            return res.status(200).json({ message: "authenticated" });
+            return res.status(200).json({
+                message: "authenticated",
+                role: user.role,
+            });
         }
 
 

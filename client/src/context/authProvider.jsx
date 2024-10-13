@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { checkAuth } from "../services";
-import signinAuth from "../services/auth/signinAuth";
+import { useNavigate } from "react-router-dom";
+import { checkAuthService, signinAuthService, logoutService } from "../services";
 
 const AuthContext = createContext();
 
@@ -9,8 +9,11 @@ export const UseAuthContext = () => {
 }
 
 const AuthProvider = ({ children }) => {
+    const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [showNotif, setShowNotif] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [notifSuccess, setNotifSuccess] = useState(false);
+    const [notifError, setNotifError] = useState(false);
     
 
     // initial authentication
@@ -18,20 +21,15 @@ const AuthProvider = ({ children }) => {
         const initialLoad = async () => {
             try {
 
-                const res = await checkAuth(setIsAuthenticated, setShowNotif);
-                console.log("response in -> " + res);
-
-                if (res) {
-                    await setIsAuthenticated(true);
-                }
-
-                console.log(isAuthenticated);
+                await checkAuthService(setIsAuthenticated);
 
 
             } catch (err) {
                 console.error(err);
                 setIsAuthenticated(false);
-                setShowNotif(false);
+                setNotifError(false);
+            } finally {
+                setIsLoading(false);
             }
         }
 
@@ -40,8 +38,52 @@ const AuthProvider = ({ children }) => {
 
 
 
+    // signin
+    const signin = async (data) => {
+        try {
+            console.log("testing send");
+            const response = await signinAuthService(data);
+
+            if (response.status === 200) {
+                setNotifError(false);
+                setIsAuthenticated(true);
+                return navigate(response.data.role === "admin" ? "/adminpage" : "councilorpage");
+
+            } else {
+
+                console.log("signin failed");
+            setNotifError(true);
+                setIsAuthenticated(false);
+                
+            }
+
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    }
+
+
+    // logout
+    const logout = async () => {
+        try {
+            const response = await logoutService();
+            console.log(response);
+
+            if (response.status === 204) {
+                navigate(0);
+            }
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    }
+
+
+
+
     return (
-        <AuthContext.Provider value={{isAuthenticated, showNotif, setShowNotif, signinAuth }}>
+        <AuthContext.Provider value={{isAuthenticated, notifError, setNotifError, isLoading, signin, logout }}>
             { children }
         </AuthContext.Provider>
     )

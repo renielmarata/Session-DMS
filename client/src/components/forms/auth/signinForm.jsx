@@ -10,8 +10,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import { SigninFailedNotification } from "../..";
+
 import { UseAuthContext } from "../../../context/authProvider";
-import signinAuth from "../../../services/auth/signinAuth";
 
 
 // styled components
@@ -34,7 +34,7 @@ const FormHeader = styled(Typography)(({ theme }) => ({
 
 const SigninForm = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const { isAuthenticated, showNotif, setShowNotif } = UseAuthContext(null);
+    const { isAuthenticated, notifError, signin } = UseAuthContext();
 
     const signinSchema = Yup.object({
         username: Yup.string()
@@ -54,9 +54,10 @@ const SigninForm = () => {
             <Formik
                 initialValues={{ username: "", password: "" }}
                 validationSchema={signinSchema}
-                onSubmit={async (values, { isSubmitting }) => {
+                onSubmit={async (values, { setSubmitting }) => {
                     //send request
-                    await signinAuth(values, setShowNotif);
+                    await signin(values);
+                    setSubmitting(false);
                 }}
             >
                 {({ isSubmitting, values, errors, handleSubmit, handleChange, touched }) => (
@@ -70,7 +71,7 @@ const SigninForm = () => {
 
                             {
                                 /** notification */
-                                showNotif && <SigninFailedNotification/>
+                                notifError && <SigninFailedNotification/>
                             }
 
                             <Field
@@ -115,11 +116,12 @@ const SigninForm = () => {
                                 variant="contained"
                                 size="large"
                                 disableElevation
+                                disabled={ isSubmitting }
                                 sx={{
                                     textTransform: 'none',
                                 }}
                             >
-                                Submit
+                                { isSubmitting ? "...Submitting" : "Submit"}
                             </Button>
                         </Stack>
                     </Form>

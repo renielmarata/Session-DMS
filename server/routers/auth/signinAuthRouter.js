@@ -5,7 +5,7 @@ const { express } = require("../../utils/libs");
 
 const signinAuthRouter = express.Router();
 
-signinAuthRouter.post("/signin", authAccessToken, authRefreshToken, signinAuthController);
+signinAuthRouter.post("/signin", signinAuthController);
 
 
 module.exports = signinAuthRouter;
