@@ -10,6 +10,7 @@ const AdminDashboardContainer = styled(Container)(({ theme }) => ({
 const AdminDashboard = () => {
     return ( 
         <AdminDashboardContainer maxWidth='xxl'>
+            
             admin dashboard
         </AdminDashboardContainer>
      );

@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const Busboy = require("busboy");
 
 
 module.exports = {
@@ -15,4 +16,5 @@ module.exports = {
     cookieParser,
     cors,
     jwt,
+    Busboy,
 }

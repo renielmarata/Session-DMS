@@ -118,10 +118,14 @@ const AddSession = () => {
                         <FormControl fullWidth margin="normal">
                             <FilePond
                                 files={file}
+                                
                                 onupdatefiles={(fileItems) => {
-                                    setFile(fileItems.map(fileItem => fileItem.file));
-                                    setFieldValue('file', fileItems.map(fileItem => fileItem.file));
+                                    setFile(fileItems.map(item => item.file));
+                                    setFieldValue('file', fileItems.map(item => item.file));
                                 }}
+                                
+                           
+                            
                                 allowMultiple={true}
                                 acceptedFileTypes={['application/pdf', 'image/jpeg']}
                                 labelIdle='Drag & Drop your file or <span class="filepond--label-action">Browse</span>'

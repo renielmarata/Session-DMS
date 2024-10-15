@@ -1,7 +1,7 @@
 const { express, dotenv, cookieParser, helmet, cors } = require("./utils/libs.js");
 const { dbConnect } = require("./config/index.js");
 const { authAccessToken } = require("./middlewares/index.js");
-const { checkAuthRouter, signinAuthRouter } = require("./routers/index.js");
+const { checkAuthRouter, signinAuthRouter, logoutAuthRouter } = require("./routers/index.js");
 
 
 
@@ -28,21 +28,7 @@ const startServer = async () => {
 
         app.use(checkAuthRouter);
         app.use(signinAuthRouter);
-
-        app.post("/logout", (req, res) => {
-            console.log("logout request received");
-            res.clearCookie(
-                'TolGovAccess',
-            );
-
-            res.clearCookie(
-                'TolGovRefresh',
-            );
-
-            return res.status(204).json({
-                message: 'successfully remote token'
-            })
-        })
+        app.use(logoutAuthRouter);
 
 
         
