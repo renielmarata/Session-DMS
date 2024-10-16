@@ -11,12 +11,13 @@ const addSessionService = async (data) => {
         const accessToken = await getAccessTokenCookie();
 
         if (accessToken) {
-            headers['authorizatin'] = accessToken;
+            headers['authorization'] = accessToken;
         }
 
 
         const response = await addSessionAPI(headers, data);
-        console.log(response);
+        return response;
+        
 
     } catch (err) {
         console.log(err);

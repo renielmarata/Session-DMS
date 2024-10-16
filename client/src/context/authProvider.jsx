@@ -87,7 +87,7 @@ const AuthProvider = ({ children }) => {
     const addSession = async (data) => {
         try {
             const response = await addSessionService(data);
-            navigate(0);
+            console.log(response);
         } catch (err) {
             console.log(err);
             return false;
