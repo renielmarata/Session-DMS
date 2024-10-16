@@ -1,5 +1,7 @@
 import { Container } from "@mui/material";
 import { styled } from "@mui/system";
+import { UseUserContext } from "../../context/userDataProvider";
+import { useEffect } from "react";
 
 
 const AdminDashboardContainer = styled(Container)(({ theme }) => ({
@@ -8,6 +10,14 @@ const AdminDashboardContainer = styled(Container)(({ theme }) => ({
 
 
 const AdminDashboard = () => {
+    const { adminDashboardDataService } = UseUserContext();
+
+    useEffect(()=>{
+        console.log("sample");
+        const response = adminDashboardDataService();
+        console.log(response);
+    },[])
+
     return ( 
         <AdminDashboardContainer maxWidth='xxl'>
             

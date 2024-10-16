@@ -61,6 +61,11 @@ const startServer = async () => {
             })
 
             req.pipe(busboy);
+        });
+
+
+        app.post('/adminDashboardData', (req, res) => {
+            console.log("admin data --------------------");
         })
 
 
