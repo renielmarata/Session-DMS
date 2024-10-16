@@ -7,6 +7,7 @@ import { FilePond, registerPlugin } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import { addSessionService } from '../../services';
+import { UseAuthContext } from '../../context/authProvider';
 
 registerPlugin(FilePondPluginFileValidateType);
 
@@ -32,6 +33,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const AddSession = () => {
+    const { addSession } = UseAuthContext();
     const [sessionType, setSessionType] = React.useState('regular');
     const [file, setFile] = React.useState([]);
 
@@ -54,8 +56,8 @@ const AddSession = () => {
                     file: [],
                 }}
                 validationSchema={validationSchema}
-                onSubmit={(values) => {
-                    console.log(values);
+                onSubmit={ async (values) => {
+                    await addSession(values);
                 }}
             >
                 {({ errors, touched, handleChange, setFieldValue }) => (
@@ -118,14 +120,10 @@ const AddSession = () => {
                         <FormControl fullWidth margin="normal">
                             <FilePond
                                 files={file}
-                                
                                 onupdatefiles={(fileItems) => {
                                     setFile(fileItems.map(item => item.file));
                                     setFieldValue('file', fileItems.map(item => item.file));
                                 }}
-                                
-                           
-                            
                                 allowMultiple={true}
                                 acceptedFileTypes={['application/pdf', 'image/jpeg']}
                                 labelIdle='Drag & Drop your file or <span class="filepond--label-action">Browse</span>'

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { checkAuthService, signinAuthService, logoutService } from "../services";
+import { checkAuthService, signinAuthService, logoutService, addSessionService } from "../services";
 
 const AuthContext = createContext();
 
@@ -80,10 +80,37 @@ const AuthProvider = ({ children }) => {
     }
 
 
+    
+    // ADMIN --------
+
+    // add session
+    const addSession = async (data) => {
+        try {
+            const response = await addSessionService(data);
+            navigate(0);
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    }
+
+
 
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, notifError, setNotifError, isLoading, signin, logout }}>
+        <AuthContext.Provider value={{
+            // states
+            isAuthenticated, 
+            notifError, 
+            setNotifError, 
+            isLoading, 
+            
+            // services
+            signin, 
+            logout,
+            addSession,
+
+            }}>
             { children }
         </AuthContext.Provider>
     )
