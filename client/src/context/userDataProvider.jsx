@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext } from "react";
+import dashboardService from "../services/admin/dashboardService";
 
 const UserContext = createContext();
 
@@ -15,9 +16,7 @@ const UserDataProvider = ({children}) => {
     // admin
     const adminDashboardDataService = async () => {
         try {
-            const response = await axios.post(
-                "http://localhost:5000/adminDashboardData",
-            );
+            const response = await dashboardService();
 
             console.log(response);
 

@@ -1,6 +1,6 @@
 const { express, mongoose, dotenv, cookieParser, helmet, cors } = require("./utils/libs.js");
 const { dbConnect } = require("./config/index.js");
-const { checkAuthRouter, signinAuthRouter, logoutAuthRouter, addSessionRouter } = require("./routers/index.js");
+const { checkAuthRouter, signinAuthRouter, logoutAuthRouter, addSessionRouter, dashboardRouter } = require("./routers/index.js");
 const { GridFSBucket } = require("mongodb");
 const Busboy = require('busboy');
 
@@ -33,11 +33,7 @@ const startServer = async () => {
 
         // admin
         app.use(addSessionRouter);
-
-
-        app.post('/adminDashboardData', (req, res) => {
-            console.log("admin data --------------------");
-        })
+        app.use(dashboardRouter);
 
 
 

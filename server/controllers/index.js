@@ -7,7 +7,7 @@ const logoutAuthController = require("./auth/logoutAuthController.js");
 
 // admin
 const addSessionController = require("./admin/addSessionController.js");
-
+const dashboardController = require('./admin/dashboardController.js');
 
 
 
@@ -20,4 +20,5 @@ module.exports = {
 
     // admin
     addSessionController,
+    dashboardController,
 }

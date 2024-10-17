@@ -10,6 +10,7 @@ const endPoints = {
     },
 
     admin: {
+        dashboard: 'admindashboard',
         addSession: 'addSession',
     }
 }

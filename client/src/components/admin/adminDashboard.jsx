@@ -12,11 +12,7 @@ const AdminDashboardContainer = styled(Container)(({ theme }) => ({
 const AdminDashboard = () => {
     const { adminDashboardDataService } = UseUserContext();
 
-    useEffect(()=>{
-        console.log("sample");
-        const response = adminDashboardDataService();
-        console.log(response);
-    },[])
+    adminDashboardDataService();
 
     return ( 
         <AdminDashboardContainer maxWidth='xxl'>
