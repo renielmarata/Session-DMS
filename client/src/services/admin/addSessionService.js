@@ -4,6 +4,8 @@ import { getAccessTokenCookie } from "../../utils";
 const addSessionService = async (data) => {
     try {
 
+        console.log("service test");
+        
         const headers = {
         'Content-Type':'multipart/form-data',
         }

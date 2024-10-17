@@ -3,7 +3,7 @@ const { express } = require("../../utils/libs");
 
 const dashboardRouter = express.Router();
 
-dashboardRouter.post('/admindashboard', dashboardController);
+dashboardRouter.post('/adminDashboardData', dashboardController);
 
 
 module.exports = dashboardRouter;

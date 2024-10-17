@@ -7,10 +7,6 @@ const checkAuthController = async (req, res) => {
         const accessToken = req.accessToken;
         const refreshToken = req.refreshToken;
 
-        console.log('accessToken -> ' + JSON.stringify(accessToken));
-        console.log('refreshToken -> ' + JSON.stringify(refreshToken));
-        console.log("received in controller");
-
 
         if (accessToken) {
             return res.status(200).json({

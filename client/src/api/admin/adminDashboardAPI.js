@@ -1,6 +1,6 @@
 import { axiosInstance, endPoints } from "../../config";
 
-const dashboardAPI = async (headers) => {
+const adminDashboardAPI = async (headers) => {
     try {
 
         const response = await axiosInstance.post(
@@ -22,4 +22,4 @@ const dashboardAPI = async (headers) => {
 
 
 
-export default dashboardAPI;
+export default adminDashboardAPI;

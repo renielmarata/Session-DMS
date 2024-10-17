@@ -1,7 +1,7 @@
-import { dashboardAPI } from "../../api";
+import { adminDashboardAPI } from "../../api";
 import { getAccessTokenCookie } from "../../utils";
 
-const dashboardService = async () => {
+const adminDashboardService = async () => {
     try {
         const headers = {
             'Content-Type':'multipart/form-data',
@@ -13,7 +13,7 @@ const dashboardService = async () => {
             headers['authorization'] = `Bearer ${accessToken}`;
         }
 
-        const response = await dashboardAPI(headers);
+        const response = await adminDashboardAPI(headers);
 
         return response;
 
@@ -24,4 +24,4 @@ const dashboardService = async () => {
 }
 
 
-export default dashboardService;
+export default adminDashboardService;

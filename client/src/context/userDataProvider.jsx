@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useContext } from "react";
-import dashboardService from "../services/admin/dashboardService";
+import { adminDashboardService } from "../services";
 
 const UserContext = createContext();
 
@@ -14,11 +14,11 @@ export const UseUserContext = () => {
 const UserDataProvider = ({children}) => {
     
     // admin
-    const adminDashboardDataService = async () => {
+    const adminDashboardData = async () => {
         try {
-            const response = await dashboardService();
+            const response = await adminDashboardService();
 
-            console.log(response);
+            return response;
 
         } catch (err) {
             console.log(err);
@@ -27,7 +27,7 @@ const UserDataProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value={{ adminDashboardDataService }}>
+        <UserContext.Provider value={{ adminDashboardData }}>
             {children}
         </UserContext.Provider>
     )
