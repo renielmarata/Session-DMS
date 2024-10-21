@@ -35,8 +35,6 @@ const startServer = async () => {
         app.use(addSessionRouter);
         app.use(dashboardRouter);
 
-
-
         
 
         app.listen(process.env.serverPort);

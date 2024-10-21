@@ -10,24 +10,33 @@ const AdminDashboardContainer = styled(Container)(({ theme }) => ({
 
 const AdminDashboard = () => {
     const { adminDashboardData } = UseUserContext();
-    const [file, setFile] = useState(null);
+    const [img, setImg] = useState();
 
     useEffect(() => {
         const fetchFileData = async () => {
             try {
                 const response = await adminDashboardData();
-                setFile(response.data.files[0]);
+
+                const url = URL.createObjectURL(response);
+                console.log(url);
+                setImg(url);
+
             } catch (err) {
                 console.error(err);
             }
         };
 
-        fetchFileData();
+        if (!img) {
+            fetchFileData();
+        }
     }, [adminDashboardData]);
 
     return (
         <AdminDashboardContainer maxWidth='xxl'>
             <h2>Admin Dashboard</h2>
+            {
+                <img src={img}/>
+            }
         </AdminDashboardContainer>
     );
 };

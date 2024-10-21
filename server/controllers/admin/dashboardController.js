@@ -1,29 +1,31 @@
-const { GridFSBucket } = require("mongodb");
+const { GridFSBucket, ObjectId } = require("mongodb");
 const { mongoose } = require("../../utils/libs");
 
 const dashboardController = async (req, res) => {
     try {
-        // GridFSBucket
+        console.log("Received in dashboard controller");
+
         const conn = mongoose.connection;
-        const bucket = new GridFSBucket(conn.db, { bucketName: 'files' });
+        const bucket = new GridFSBucket(conn.db, { bucketName: 'sessionFile' });
 
-        // Fetch the 3 latest files
-        const latestFiles = await conn.collection('sessionFile.files')
-            .find({})
-            .sort({ _id: -1 })
-            .limit(3)
-            .toArray();
+        // Create a readable stream to fetch the file from GridFS
+        const fileStream = bucket.openDownloadStream(new ObjectId('6713897a2a60ac5c0557b66a'));
 
-        // Count the total number of users
-        const userCount = await conn.collection("users").countDocuments();
+        // Set the appropriate headers for the response
+        res.setHeader('Content-Type', 'image/jpeg'); // Assuming the file is a JPEG image
+        res.setHeader('Content-Disposition', 'inline'); // Display in the browser
 
-        // Send the response
-        return res.status(200).json({
-            files: latestFiles,
-            users: userCount,
+        // Pipe the file stream directly to the response
+        fileStream.pipe(res);
+
+        // Handle stream errors
+        fileStream.on('error', (err) => {
+            console.error("Error streaming file:", err);
+            res.status(404).json({ message: "File not found" });
         });
+
     } catch (err) {
-        console.log(err);
+        console.error("An error occurred:", err);
         return res.status(500).json({ message: "Server Error" });
     }
 };
