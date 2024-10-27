@@ -1,119 +1,166 @@
 import { useNavigate } from "react-router-dom";
-import { Box, ButtonBase, Card, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
+import { Avatar, Box, ButtonBase, Card, List, ListItem, ListItemIcon, ListItemText, Stack, SvgIcon, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import logo from "../../assets/images/public/logo.svg";
 
-// material ui
-import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
-import AddIcon from '@mui/icons-material/Add';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-
+// assets
+import { ReactComponent as HomeIcon } from "../../assets/icons/homeIcon.svg";
+import { ReactComponent as DocumentIcon } from "../../assets/icons/documentIcon.svg";
+import { ReactComponent as MultipleUserIcon } from "../../assets/icons/multipleUserIcon.svg";
+import { ReactComponent as ListIcon } from "../../assets/icons/listIcon.svg";
+import { ReactComponent as CloudDownloadIcon } from "../../assets/icons/cloudDownloadIcon.svg";
+import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
+import { ReactComponent as SignoutIcon } from "../../assets/icons/signoutIcon.svg";
 
 
 
 const AdminSidebarContainer = styled(Box)(({ theme }) => ({
-    border: '1px solid red',
+    borderRight: '1px solid #EFEFEF',
     padding: '80px 0px',
     height: '100%',
     minWidth: '200px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '80px',
 }));
 
-
-const ImageContainer = styled(Box)(({ theme }) => ({
-    width: '120px',
+// Profile styles
+const ProfileContainer = styled(Stack)(({ theme }) => ({
+    marginBottom: '36px',
+    color: "#505C6D",
+    width: '200px',
 }));
 
+const ProfileName = styled(Typography)(({ theme }) => ({
+    fontFamily: 'sans-serif',
+    color: '#505C6D',
+    fontSize: '16px',
+    fontWeight: '600',
+}));
+
+const ProfileRole = styled(Typography)(({ theme }) => ({
+    fontSize: '12px',
+}));
+
+const CustomList = styled(List)(({ theme }) => ({
+    width: '100%',
+}));
+
+const CustomItem = styled(ListItem)(({ theme }) => ({
+    paddingLeft: '30px',
+    color: '#79869A',
+    width: '100%',
+    alignItems: 'center',
+    gap: '16px',
+}));
+
+const NavHeader = styled(Typography)(({ theme }) => ({
+    margin: '14px 0px',
+    paddingLeft: '30px',
+    fontSize: "13px",
+    color: '#989EBD',
+}));
 
 const NavText = styled(Typography)(({ theme }) => ({
     fontSize: '16px',
+    fontWeight: '500',
 }));
 
-
-const CustomList = styled(List)(({ theme }) => ({
-
-    width: '100%',
-}))
-
-const CustomItem = styled(ListItem)(({ theme }) => ({
-    width: '100%',
+const NavIcon = styled(SvgIcon)(({ theme }) => ({
+    fontSize: '18px',
+    fontWeight: 'thin',
 }));
 
-const CustomIcon = styled(ListItemIcon)(({ theme }) => ({
-    minWidth: 40,
-}))
-
-
-const AdminSidebar = ({states}) => {
+const AdminSidebar = ({ states }) => {
     const navigate = useNavigate();
     const { logoutNotif, setLogoutNotif } = states;
 
-    return ( 
+    const handleNavigation = (path) => {
+        navigate(path);
+    };
+
+    return (
         <AdminSidebarContainer>
-            <Stack direction="column" spacing={4} alignItems="center">
-
-                <ImageContainer
-                    component="img"
-                    src={logo}
+            <ProfileContainer direction="column" spacing={3} alignItems="center">
+                <Avatar
+                    alt={'profile picture'}
+                    sx={{
+                        width: '90px',
+                        height: '90px',
+                    }}
                 />
+                <Stack direction='column' spacing={0} textAlign="center">
+                    <ProfileName>
+                        John Doe
+                    </ProfileName>
+                    <ProfileRole>
+                        Admin
+                    </ProfileRole>
+                </Stack>
+            </ProfileContainer>
 
-                <Typography>
-                    Admin
-                </Typography>
-            </Stack>
-
-
-            <CustomList component="nav" sx={{width:'100%'}}>
-                <CustomItem button="true" component={ButtonBase} onClick={()=>{navigate('./')}}>
-                    <CustomIcon>
-                        <SpaceDashboardOutlinedIcon />
-                    </CustomIcon>
-                    <ListItemText>Dashboard</ListItemText>
-                </CustomItem>
-
-                <CustomItem button="true" component={ButtonBase} onClick={()=>{navigate('addsession')}}>
-                    <CustomIcon>
-                        <AddIcon/>
-                    </CustomIcon>
-                    <ListItemText>Add Session</ListItemText>
-                </CustomItem>
-
-                <CustomItem button="true" component={ButtonBase}>
-                    <CustomIcon>
-                        <SearchOutlinedIcon/>
-                    </CustomIcon>
-                    <ListItemText>Find Session</ListItemText>
-                </CustomItem>
-
-                <CustomItem button="true" component={ButtonBase}>
-                    <CustomIcon>
-                        <PersonAddAltOutlinedIcon />
-                    </CustomIcon>
-                    <ListItemText>Create Session</ListItemText>
+            <CustomList
+                component="nav"
+                subheader={<NavHeader>Menu</NavHeader>}
+            >
+                <CustomItem
+                    button
+                    component={ButtonBase}
+                    onClick={()=>{navigate('./')}}
+                >
+                    <NavIcon component={HomeIcon} />
+                    <NavText>Home</NavText>
                 </CustomItem>
 
                 <CustomItem
-                    button="true"
+                    button
                     component={ButtonBase}
-                    onClick={() => {
-                        setLogoutNotif(true);
-                    }}
+                    onClick={()=>{ navigate('./addsession')}}
                 >
-                    <CustomIcon>
-                        <LogoutOutlinedIcon/>
-                    </CustomIcon>
-                    <ListItemText>Logout</ListItemText>
+                    <NavIcon component={DocumentIcon} />
+                    <NavText>Documents</NavText>
                 </CustomItem>
+
+                <CustomItem
+                    button
+                    component={ButtonBase}
+                    onClick={()=>{ navigate('./createuser') }}
+                >
+                    <NavIcon component={MultipleUserIcon} />
+                    <NavText>Users</NavText>
+                </CustomItem>
+
+                <CustomItem button component={ButtonBase}>
+                    <NavIcon component={ListIcon} />
+                    <NavText>Logs</NavText>
+                </CustomItem>
+
             </CustomList>
 
 
+            <CustomList
+                component="nav"
+                subheader={<NavHeader>Utilities</NavHeader>}
+            >
+                <CustomItem button component={ButtonBase}>
+                    <NavIcon component={CloudDownloadIcon} />
+                    <NavText>Backup</NavText>
+                </CustomItem>
+
+                <CustomItem button component={ButtonBase}>
+                    <NavIcon component={TrashIcon} />
+                    <NavText>Trash</NavText>
+                </CustomItem>
+
+                <CustomItem button component={ButtonBase}>
+                    <NavIcon component={SignoutIcon} />
+                    <NavText>Logout</NavText>
+                </CustomItem>
+
+            </CustomList>
+
+            
         </AdminSidebarContainer>
-     );
-}
- 
+    );
+};
+
 export default AdminSidebar;

@@ -5,24 +5,15 @@ const dashboardController = async (req, res) => {
     try {
         console.log("Received in dashboard controller");
 
+
         const conn = mongoose.connection;
         const bucket = new GridFSBucket(conn.db, { bucketName: 'sessionFile' });
 
-        // Create a readable stream to fetch the file from GridFS
-        const fileStream = bucket.openDownloadStream(new ObjectId('6713897a2a60ac5c0557b66a'));
 
-        // Set the appropriate headers for the response
-        res.setHeader('Content-Type', 'image/jpeg'); // Assuming the file is a JPEG image
-        res.setHeader('Content-Disposition', 'inline'); // Display in the browser
+        const fileId = await conn.db.collection('sessionFile.files').find({}, { projection: { _id: 1, filename: 1 }}).limit(3).sort({ uploadDate: -1 }).toArray();
 
-        // Pipe the file stream directly to the response
-        fileStream.pipe(res);
-
-        // Handle stream errors
-        fileStream.on('error', (err) => {
-            console.error("Error streaming file:", err);
-            res.status(404).json({ message: "File not found" });
-        });
+        console.log(fileId[0].filename);
+        
 
     } catch (err) {
         console.error("An error occurred:", err);

@@ -1,11 +1,11 @@
-import { Container } from "@mui/material";
+import { Container, IconButton, SvgIcon, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { UseUserContext } from "../../context/userDataProvider";
 import { useEffect, useState } from "react";
-import { Document, page } from "react-pdf";
+
 
 const AdminDashboardContainer = styled(Container)(({ theme }) => ({
-    border: '1px solid green',
+    // You can add your styles here if needed
 }));
 
 const AdminDashboard = () => {
@@ -16,27 +16,21 @@ const AdminDashboard = () => {
         const fetchFileData = async () => {
             try {
                 const response = await adminDashboardData();
-
-                const url = URL.createObjectURL(response);
-                console.log(url);
-                setImg(url);
-
+                console.log(response);
             } catch (err) {
                 console.error(err);
             }
         };
 
-        if (!img) {
-            fetchFileData();
-        }
+        fetchFileData();
     }, [adminDashboardData]);
 
     return (
         <AdminDashboardContainer maxWidth='xxl'>
             <h2>Admin Dashboard</h2>
-            {
-                <img src={img}/>
-            }
+            <IconButton>
+                <i class="ri-chat-1-line"></i>
+            </IconButton>
         </AdminDashboardContainer>
     );
 };
