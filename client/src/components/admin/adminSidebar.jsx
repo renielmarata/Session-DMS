@@ -10,6 +10,8 @@ import { ReactComponent as ListIcon } from "../../assets/icons/listIcon.svg";
 import { ReactComponent as CloudDownloadIcon } from "../../assets/icons/cloudDownloadIcon.svg";
 import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 import { ReactComponent as SignoutIcon } from "../../assets/icons/signoutIcon.svg";
+import LogoutDialog from "../dialogs/logoutDialog";
+import { useState } from "react";
 
 
 
@@ -70,9 +72,9 @@ const NavIcon = styled(SvgIcon)(({ theme }) => ({
     fontWeight: 'thin',
 }));
 
-const AdminSidebar = ({ states }) => {
+const AdminSidebar = () => {
+    const [logoutNotif, setLogoutNotif] = useState(false);
     const navigate = useNavigate();
-    const { logoutNotif, setLogoutNotif } = states;
 
     const handleNavigation = (path) => {
         navigate(path);
@@ -151,12 +153,21 @@ const AdminSidebar = ({ states }) => {
                     <NavText>Trash</NavText>
                 </CustomItem>
 
-                <CustomItem button component={ButtonBase}>
+                <CustomItem 
+                button 
+                component={ButtonBase}
+                onClick={()=>{ setLogoutNotif(!logoutNotif)}}
+                >
                     <NavIcon component={SignoutIcon} />
                     <NavText>Logout</NavText>
                 </CustomItem>
 
             </CustomList>
+
+
+
+            <LogoutDialog states={{logoutNotif, setLogoutNotif}}/>
+            
 
             
         </AdminSidebarContainer>

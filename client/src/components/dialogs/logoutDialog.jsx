@@ -1,8 +1,12 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { UseAuthContext } from "../../context/authProvider";
 
-const LogoutDialog = ({ states }) => {
-    const { logout, logoutNotif, setLogoutNotif } = states;
+
+const LogoutDialog = ({states}) => {
+    const {logout} = UseAuthContext();
+    const {logoutNotif, setLogoutNotif} = states;
 
     return ( 
         <Dialog
@@ -18,7 +22,8 @@ const LogoutDialog = ({ states }) => {
                 </DialogContentText>
                 <DialogActions>
                     <Button onClick={() => {
-                        setLogoutNotif(false);
+       
+       setLogoutNotif(false);
                     }} color="primary">
                         cancel
                     </Button>
