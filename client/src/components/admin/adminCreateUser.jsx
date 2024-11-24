@@ -1,7 +1,8 @@
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Button, Checkbox, Container, FormControl, List, ListItem, Stack, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Checkbox, Container, FormControl, List, ListItem, Stack, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/system";
+import axios from "axios";
 
 
 const CreateUserContainer = styled(Container)(({ theme }) => ({
@@ -62,13 +63,42 @@ const CreateUser = () => {
                     }
                 }}
                 validationSchema={userSchema}
-                onSubmit={(values) => {
-                    console.log(values);
+                onSubmit={ async (values) => { 
+                    const formData = new FormData();
+
+                    formData.append("firstname", values.firstname);
+                    formData.append("lastname", values.lastname);
+                    formData.append("suffix", values.suffix);
+                    formData.append("email", values.email);
+                    formData.append("role", values.role);
+                    formData.append("privilege", values.privilege);
+                    formData.append('profilePicture', values.profilePicture);
+
+                    const response = await axios.post(
+                        "http://localhost:5000/addUser",
+                        formData,
+                        {
+                            headers: {
+                                "Content-Type":"multipart/form-data"
+                            }
+                        }
+                    )
                 }}
             >
                 {({ isSubmitting, values, errors, handleChange, handleSubmit, touched }) => (
                     <Form>
                         <Stack direction='column' spacing={2}>
+                            <label>
+                                <Avatar component="TextField" />
+                                <input
+                                    name="profilePicture"
+                                    type="file"
+                                    onChange={(event) => {
+                                        values.profilePicture = event.currentTarget.files[0];
+                                    }}
+                                />
+                            </label>
+
                             <Field
                                 as={TextField}
                                 name="firstname"
