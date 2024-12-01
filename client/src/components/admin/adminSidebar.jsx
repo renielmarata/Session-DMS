@@ -12,6 +12,7 @@ import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 import { ReactComponent as SignoutIcon } from "../../assets/icons/signoutIcon.svg";
 import LogoutDialog from "../dialogs/logoutDialog";
 import { useState } from "react";
+import { UseUserContext } from "../../context/userDataProvider";
 
 
 
@@ -80,6 +81,7 @@ const AdminSidebar = () => {
         navigate(path);
     };
 
+
     return (
         <AdminSidebarContainer>
             <ProfileContainer direction="column" spacing={3} alignItems="center">
@@ -92,10 +94,10 @@ const AdminSidebar = () => {
                 />
                 <Stack direction='column' spacing={0} textAlign="center">
                     <ProfileName>
-                        John Doe
+                        reniel
                     </ProfileName>
                     <ProfileRole>
-                        Admin
+                        admin
                     </ProfileRole>
                 </Stack>
             </ProfileContainer>

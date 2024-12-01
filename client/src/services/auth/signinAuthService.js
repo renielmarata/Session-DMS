@@ -5,6 +5,7 @@ import { getAccessTokenCookie } from "../../utils";
 const signinAuthService = async (data) => {
     try {
 
+
         const headers = {
             'Content-Type':'application/json',
         }
@@ -16,6 +17,7 @@ const signinAuthService = async (data) => {
         }
         
         const response = await signinAuthAPI(headers, data);
+
         
         return response;
 

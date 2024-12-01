@@ -13,6 +13,7 @@ const getAccessTokenCookie = async (req) => {
         try {
             const accessToken = await jwt.verify(unverifiedToken, process.env.SECRET_KEY);
 
+            console.log(" verified accessToken -------- " + JSON.stringify(accessToken));
             return accessToken;
         } catch (err) {
             console.log(err.name);

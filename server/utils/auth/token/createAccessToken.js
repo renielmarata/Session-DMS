@@ -6,7 +6,7 @@ const createAccessToken = async (token) => {
 
         const newAccessToken = await jwt.sign(
             {
-                idnumber, username
+                 token
             },
             process.env.SECRET_KEY,
             {

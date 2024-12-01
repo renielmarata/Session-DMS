@@ -8,6 +8,7 @@ const authAccessToken = async (req, res, next) => {
             return next();
         }
 
+
         req.accessToken = accessToken;
         return next();
 

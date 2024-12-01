@@ -3,6 +3,7 @@ const { jwt } = require("../../utils/libs");
 
 const checkAuthController = async (req, res) => {
     try {
+
         
         const accessToken = req.accessToken;
         const refreshToken = req.refreshToken;

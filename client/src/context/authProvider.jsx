@@ -14,14 +14,16 @@ const AuthProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [notifSuccess, setNotifSuccess] = useState(false);
     const [notifError, setNotifError] = useState(false);
-    
 
     // initial authentication
     useEffect(() => {
         const initialLoad = async () => {
             try {
 
-                await checkAuthService(setIsAuthenticated);
+                const res = await checkAuthService(setIsAuthenticated);
+                
+                console.log(res);
+
 
 
             } catch (err) {

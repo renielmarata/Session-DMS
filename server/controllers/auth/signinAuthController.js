@@ -1,5 +1,7 @@
 const { userModel } = require("../../models");
+const { getUser } = require("../../services");
 const { createAccessToken, createRefreshToken } = require("../../utils");
+const { jwt } = require("../../utils/libs");
 
 const signinAuthController = async (req, res) => {
     try {
@@ -17,13 +19,15 @@ const signinAuthController = async (req, res) => {
         if (user) {
             const { _id, username } = user;
 
-            const newAccessToken = await createAccessToken({ _id, username });
+            const newAccessToken = await createAccessToken({ "id":"kelsheylami", "username": username });
+            
 
             if (!newAccessToken) {
                 return res.status(500).json({ message: 'accessToken creation error' });
             }
 
-            const newRefreshToken = await createRefreshToken({ _id, username });
+            const newRefreshToken = await createRefreshToken({ "id":"kelsheylami", "username":username });
+
 
             if (!newRefreshToken) {
                 return res.status(500).json({ message: 'refreshToken creation error' });
@@ -34,9 +38,14 @@ const signinAuthController = async (req, res) => {
             res.cookie('TolGovAccess', newAccessToken, { maxAge: 30 * 60 * 1000 });
             res.cookie('TolGovRefresh', newRefreshToken, { maxAge: 1 * 60 * 60 * 1000, httpOnly: true });
 
+            const userData = await getUser(_id);
+
+
+
             return res.status(200).json({
                 message: "authenticated",
                 role: user.role,
+                userData: userData,
             });
         }
 
