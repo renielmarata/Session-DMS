@@ -35,25 +35,7 @@ const startServer = async () => {
         app.use(addSessionRouter);
         app.use(dashboardRouter);
         app.post("/addUser", (req, res) => {
-            const bb = Busboy({ headers: req.headers });
-
-            bb.on('file', (fieldname, file, filename, encoding, mimetype) => {
-                
-
-                file.on('data', (data) => {
-                    console.log(filename);
-                });
-                file.on('end', () => {
-                    console.log(`File [${fieldname}] finished`);
-                });
-            });
-
-
-            bb.on('finish', () => {
-                console.log("finish receiving file");
-            })
-
-            req.pipe(bb);
+            console.log("received add user");
         })
 
         

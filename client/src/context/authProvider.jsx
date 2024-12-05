@@ -19,7 +19,6 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const initialLoad = async () => {
             try {
-
                 const res = await checkAuthService(setIsAuthenticated);
                 
                 console.log(res);

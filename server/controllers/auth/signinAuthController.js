@@ -7,9 +7,6 @@ const signinAuthController = async (req, res) => {
     try {
 
 
-        console.log('signin authentication controller');
-
-
 
         // check user using username and password
         const user = await userModel.findOne(req.body);
@@ -19,14 +16,14 @@ const signinAuthController = async (req, res) => {
         if (user) {
             const { _id, username } = user;
 
-            const newAccessToken = await createAccessToken({ "id":"kelsheylami", "username": username });
+            const newAccessToken = await createAccessToken({"id":_id, "username":username});
             
 
             if (!newAccessToken) {
                 return res.status(500).json({ message: 'accessToken creation error' });
             }
 
-            const newRefreshToken = await createRefreshToken({ "id":"kelsheylami", "username":username });
+            const newRefreshToken = await createRefreshToken({ "id":_id, "username":username });
 
 
             if (!newRefreshToken) {

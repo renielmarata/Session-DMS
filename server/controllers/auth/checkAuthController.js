@@ -15,6 +15,8 @@ const checkAuthController = async (req, res) => {
             });
         }
 
+        console.log("test ------------------------");
+
         if (refreshToken) {
 
             // create accessToken

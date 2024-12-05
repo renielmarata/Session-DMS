@@ -3,7 +3,8 @@ const { mongoose } = require("../../utils/libs");
 
 const dashboardController = async (req, res) => {
     try {
-        console.log("Received in dashboard controller");
+
+        console.log("dashboard ------------");
 
 
         const conn = mongoose.connection;

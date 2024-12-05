@@ -16,6 +16,8 @@ const verifyRefreshToken = async (req) => {
                 process.env.SECRET_KEY,
             );
 
+            console.log("refreshToken -> "+JSON.stringify(refreshToken));
+
             return refreshToken;
 
             
